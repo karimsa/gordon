@@ -2,10 +2,12 @@
 
 a natural language event emitter.
 
+[![NPM](https://nodei.co/npm/gordon.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gordon/)
+
 ## example
 
 ```javascript
-var Gordon = require('./');
+var Gordon = require('gordon');
 var emitter = new Gordon();
 
 // map out the event
