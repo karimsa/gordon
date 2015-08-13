@@ -1,0 +1,29 @@
+{
+  "name": "gordon",
+  "version": "0.0.1",
+  "description": "a natural language event emitter.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karimsa/gordon.git"
+  },
+  "keywords": [
+    "event",
+    "emitter",
+    "natural",
+    "language"
+  ],
+  "author": "Karim Alibhai",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/karimsa/gordon/issues"
+  },
+  "homepage": "https://github.com/karimsa/gordon#readme",
+  "dependencies": {
+    "natural": "^0.2.1",
+    "underscore": "^1.8.3"
+  }
+}
