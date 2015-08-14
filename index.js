@@ -25,9 +25,9 @@ var EventEmitter = require('events').EventEmitter,
       this.map = {};
     };
 
-// .event([event name], [list of triggers]);
+// .register([event name], [list of triggers]);
 // create an event's map or append to an existing one.
-Gordon.prototype.event = function (name, triggers) {
+Gordon.prototype.register = function (name, triggers) {
   // create a new map if none exists
   if (!this.map.hasOwnProperty(name)) this.map[name] = {
     classifier: new BayesClassifier()
@@ -57,8 +57,15 @@ Gordon.prototype.event = function (name, triggers) {
 
 // .on([event name], [event handler]);
 // proxy the event emitter's on method.
-Gordon.prototype.on = function () {
-  this.events.on.apply(this.events, arguments);
+Gordon.prototype.on = function (eventName) {
+  var args = Array.prototype.slice.call(arguments);
+
+  // translate trigger to event name if no such
+  // event has been registered
+  if (!this.map.hasOwnProperty(eventName)) args[0] = this.translate(eventName);
+
+  // apply the inner on method
+  this.events.on.apply(this.events, args);
   return this;
 };
 
@@ -76,6 +83,37 @@ Gordon.prototype.off = function () {
   return this;
 };
 
+// .translate([trigger]);
+// translate a trigger to an event name
+Gordon.prototype.translate = function (trigger) {
+  // we need to flatten the trigger to make sure
+  // that variable names are not being used in the classifier
+  var plainTrigger = plain(trigger);
+
+  // use the classifier to find the proper event name
+  var eventName = this.classifier.classify(plainTrigger);
+
+  // return the event name
+  return eventName;
+};
+
+// .when([trigger], [event handler]);
+// for quick event listening without registration
+Gordon.prototype.when = function (trigger) {
+  // create a new event for the trigger
+  var eventName = 'misc:' + plain(trigger);
+
+  // register the trigger under misc event
+  this.register(eventName, trigger);
+
+  // translate trigger to event name
+  var args = Array.prototype.slice.call(arguments);
+  args[0] = eventName;
+
+  // bind to event
+  return this.on.apply(this, args);
+};
+
 // .emit([trigger], [data]);
 // emit the correct event with the respective data.
 Gordon.prototype.emit = function (trigger) {
@@ -84,7 +122,7 @@ Gordon.prototype.emit = function (trigger) {
   var plainTrigger = plain(trigger);
 
   // use the classifier to find the proper event name
-  var eventName = this.classifier.classify(plainTrigger);
+  var eventName = this.translate(trigger);
 
   // find the template to use
   var template = this.map[eventName].classifier.classify(plainTrigger);
