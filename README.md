@@ -10,8 +10,11 @@ a natural language event emitter.
 var Gordon = require('gordon');
 var emitter = new Gordon();
 
-// map out the event
-emitter.event('greeting', '[... hi, hey, hello], $subject.');
+// register the event and respective templates
+emitter.register('greeting', [
+  '[... hi, hey, hello], $subject.',
+  'how are you, $subject?'
+]);
 
 // hook onto the event
 emitter.on('greeting', function (data) {
