@@ -24,7 +24,7 @@
   "homepage": "https://github.com/karimsa/gordon#readme",
   "dependencies": {
     "natural": "^0.2.1",
-    "pennyworth": "0.0.3",
+    "pennyworth": "^0.0.5",
     "underscore": "^1.8.3"
   }
 }
