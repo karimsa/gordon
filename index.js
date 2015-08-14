@@ -17,7 +17,9 @@ var EventEmitter = require('events').EventEmitter,
         pennyworth.parse(pennyworth.lex(prompt)).map(function (array) {
           return flatten(array);
         })
-      );
+      ).map(function (text) {
+        return text.replace(/\s+/g, '-');
+      });
     },
     Gordon = function () {
       this.classifier = new LogisticRegressionClassifier();
