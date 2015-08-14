@@ -1,6 +1,6 @@
 # gordon
 
-a natural language event emitter.
+a natural language event-emitter interface.
 
 [![NPM](https://nodei.co/npm/gordon.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gordon/)
 
