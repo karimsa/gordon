@@ -118,7 +118,7 @@ Gordon.prototype.when = function (trigger) {
 
 // .emit([trigger], [data]);
 // emit the correct event with the respective data.
-Gordon.prototype.emit = function (trigger) {
+Gordon.prototype.emit = function (trigger, data) {
   // we need to flatten the trigger to make sure
   // that variable names are not being used in the classifier
   var plainTrigger = plain(trigger);
@@ -132,6 +132,9 @@ Gordon.prototype.emit = function (trigger) {
 
   // pass our trigger through the template
   var eventData = template(trigger);
+
+  // assign payload as eventData
+  Object.assign(eventData, data);
 
   // emit the event on the actual interface
   this.events.emit(eventName, eventData);
